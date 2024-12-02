@@ -23,6 +23,7 @@ The system is developed using Laravel sanctum as backend and React js as its fro
     *Update the DB connection variables*
 
   - After update run php artisan config:cache
+  - Run php artisan migrate for table creation.
 - React setup
   - Install node js and npm in your system
   - Checkout to path react-frontend in cmd and run *npm install*
