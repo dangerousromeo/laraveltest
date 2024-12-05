@@ -7,8 +7,11 @@ namespace App\Http\Controllers;
 // header('access-control-allow-credentials: true');
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ImportCsvRequest;
+use App\Http\Resources\ProductListCollection;
 use App\Imports\CsvDataImport;
+use App\Models\ProductList;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
@@ -47,6 +50,16 @@ class ImportCsvController extends Controller
             $rowCounter++;
         }
         
-        return response()->json(['csv_data' => $csvData, 'errors' => $errorMessages]);
+        //Import to DB if no validation errors
+        if(count($errorMessages) == 0 && $csvData > 0) {
+            DB::table('product_lists')->truncate();
+            Excel::import(new CsvDataImport(), $importCsvRequest->file('csv_file'));
+        }
+
+        return response()->json(['csv_data' => new ProductListCollection(ProductList::all()), 'errors' => $errorMessages]);
+    }
+
+    public function getProductList(Request $request) {
+        return response()->json(['csv_data' => new ProductListCollection(ProductList::all()), 'errors' => []]);
     }
 }

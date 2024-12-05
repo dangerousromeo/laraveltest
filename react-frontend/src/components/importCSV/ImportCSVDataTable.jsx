@@ -5,8 +5,8 @@ function ImportCSVTable(props) {
     return (
         <>
             {props.data.csv_data.length > 0 &&
-            <div>
-                <h4 className='text-center'>CSV data</h4>
+            <div className='py-10'>
+                <h4 className='text-center'>Product List</h4>
 				<table className="min-w-full text-center text-sm font-light">
 					<thead
 						className="border-b bg-neutral-50 font-medium dark:border-neutral-500 dark:text-neutral-800">
@@ -28,16 +28,6 @@ function ImportCSVTable(props) {
                     ))}
 					</tbody>
 				</table>
-			</div>
-            }
-            {props.data.errors.length > 0 &&
-            <div  style={{width : '33%'}}  className='mt-6'>
-                <h4 className='text-center'>CSV data validation errors</h4>
-				<ul className="list-disc text-red-400">
-                    {props.data.errors.map((item, index) => (
-                        <li key={index}>{item}</li>
-                    ))}
-                </ul>
 			</div>
             }
         </>
